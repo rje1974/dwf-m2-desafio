@@ -65,9 +65,9 @@ class PelisCollection {
             if ((await this.getById(peli.id)) === undefined) {
                 (await data).push(peli)
                 await jsonfile.writeFile("./pelis.json",await data);
-                return true
+                return console.log(true)
             } else {
-                return false
+                return console.log(false)
         }
       })
     }

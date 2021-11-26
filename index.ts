@@ -40,7 +40,7 @@ async function main() {
     } if (objetoUsable.actions === "add") {
       const agregable:any = objetoUsable.params
       const resultado = await collection.add(agregable)
-      return resultado;
+      return resultado
     } else {
       const resultado = await collection.getAll()
       return console.log(resultado)

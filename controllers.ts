@@ -44,3 +44,10 @@ class PelisController {
 }
 
 export { PelisController};
+
+
+// function main (){
+//   console.log("hola")
+// }
+
+// main()
