@@ -29,7 +29,7 @@ test.serial("Testeo el método getById", async (t) => {
   const all = await collection.getAll();
   const a = all[0];
   const b = await collection.getById(a.id);
-  t.deepEqual(a.title, b.title);
+  t.is(a.title, b.title);
 });
 
 test.serial("Testeo el método search", async (t) => {
@@ -45,12 +45,9 @@ test.serial("Testeo el método search", async (t) => {
     tags: ["yy", "uu"],
   });
   const all = await collection.getAll();
-  console.log("all",all)
   const a = all[0];
-  console.log("a",a)
-  const b = await collection.search({ title: SESSION_ID });//le puse any
+  const b = await collection.search({ title: SESSION_ID });
   const ids = b.map((b) => b.id);
-  console.log("error57",TEST_ID, SECOND_TEST_ID)
   t.deepEqual(ids, [TEST_ID, SECOND_TEST_ID]);
 
   const c = await collection.search({

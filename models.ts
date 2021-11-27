@@ -14,62 +14,59 @@ class Peli {
 
 class PelisCollection {
 
-    constructor(){
-        this.getAll().then()
-    }
     
-    getAll():Promise<any>{
-        return jsonfile.readFile("./pelis.json")
+    getAll():Promise<Peli[]>{
+        return jsonfile.readFile("./pelis.json").then(busqueda => busqueda)
+    };
+
+    getById(id:number) {
+        return this.getAll().then(pelis => {
+            const busqueda = pelis.find(((peli: { id: number; }) => peli.id == id))
+            return busqueda
+        }
+        )
+//        console.log("soybusqueda",busqueda)
     }
 
-    getById(id:number):Promise<any> {
-        const buscado = this.getAll().then((json) =>
-          json.find(((peli: { id: number; }) => peli.id == id)
-        ))
-        return buscado
-      }
-
-
-    async search (opcion:any):Promise<any>{
-        let array = this.getAll().then( async (array:any) => {            
+    search (opcion:any):Promise<any>{
+        return this.getAll().then(pelis => {            
             let contador = 0
-            const mapeador = await _.forEach(opcion,function(){
+            const mapeador = _.forEach(opcion,function(){
                 if (Object.keys(opcion)[contador]  === "title"){
-                    const search = Object.values(opcion)[0];
-                    const results =  _.filter(array, function(item) {
+                    const search:any = Object.values(opcion)[0];
+                    const results =  _.filter(pelis, function(item) {
                         return item.title.toLowerCase().toString().indexOf(search) > -1;
                     });
                     contador = contador + 1
-                    array = results
+                    pelis = results
                 } else {
                     let searchTAG:any = Object.values(opcion)[contador];
-                    const results =  _.filter(array, function(item) {
+                    const results =  _.filter(pelis, function(item) {
                         return item.tags.toString().toLowerCase().indexOf(searchTAG.toString().toLowerCase()) > -1;
                     });
                     contador = contador + 1
-                    array = results
-                    
+                    pelis = results
                 }
             })
-            return array
+            return pelis
         }
         )
-        return array
+        
     }
 
 
-    async add(peli:Peli):Promise<any>{
-        let data = this.getAll()
-        data.then( async (array:any) => {
-            
-            if ((await this.getById(peli.id)) === undefined) {
-                (await data).push(peli)
-                await jsonfile.writeFile("./pelis.json",await data);
-                return console.log(true)
-            } else {
-                return console.log(false)
-        }
-      })
+    add(peli:Peli):Promise<boolean>{
+        return this.getAll().then(pelis => {
+            return this.getById(peli.id).then(buscado => {
+                if (buscado == undefined) {
+                    pelis.push(peli)
+                    jsonfile.writeFile("./pelis.json",pelis);
+                    return true
+                } else {
+                    return false
+                }
+            })
+        })
     }
 }
 
@@ -79,13 +76,25 @@ export { PelisCollection, Peli};
 
 //     const hola = new PelisCollection
 //     const obj1 = {'title': "n"};
-//     const obj2 = {title: "m"};
+//     const obj2 = {title: "una"};
 //     const obj3 = {tags: "nanan"};
-//     const obj4 = {tags: "action"};
+//     const obj4 = {tags: "tt"};
 //     const obj5 = [obj1,obj3,obj4]
-//     const obj6 = { title: 'm', tag: 'mejor' }
-//     hola.search(obj6)
-// //    hola.add({ id: 122, title: "indiana jonessssssssssssssssssssssssss", tags: []})
+//     const obj6 = { title: 'ti', tag: 'uu' }
+//     const obj7 = {id:1}
+//     const obj8 = { id: 123, title: "carli jonessssssssssssssssssssssssss", tags: []}
+
+//     hola.getAll().then(console.log)
+
+//     hola.getById(210439).then(console.log)
+
+//     hola.search(obj2).then(console.log)
+
+//     hola.search(obj4).then(console.log)
+
+//     hola.search(obj6).then(console.log)
+
+//     hola.add(obj8).then(console.log)
 
 
 // }

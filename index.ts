@@ -8,6 +8,7 @@ En index.ts:
 
 import * as _ from "lodash";
 import * as minimist from "minimist";
+import { PelisController } from "./controllers";
 import {  PelisCollection } from "./models";
 
 function parseaParams(argv: string[]) {
@@ -15,7 +16,7 @@ function parseaParams(argv: string[]) {
   return resultado;
 }
 
-async function main() {
+function main() {
   const params = parseaParams(process.argv.slice(2));
   const params2 = parseaParams(process.argv.slice(2));
   let borrable = "_"
@@ -26,28 +27,22 @@ async function main() {
     params: params2
   }
 
-//  console.log(objetoUsable)
-  let collection = new PelisCollection
-  
-  async function control () {
-    
-    if (objetoUsable.actions === "get" ) {
-      const resultado = await collection.getById(objetoUsable.params.id)
-      return console.log(resultado)
+  //  console.log(objetoUsable)
+  const dato = new PelisController;
+
+  if (objetoUsable.actions == "get") {
+      return dato.get(objetoUsable).then(console.log)
     } if (objetoUsable.actions == "search") {
-      const resultado = await collection.search(objetoUsable.params)
-      return console.log(resultado)
+      return dato.get(objetoUsable).then(console.log)
     } if (objetoUsable.actions === "add") {
       const agregable:any = objetoUsable.params
-      const resultado = await collection.add(agregable)
+      const resultado = dato.add(agregable)
       return resultado
     } else {
-      const resultado = await collection.getAll()
-      return console.log(resultado)
+      return dato.pelisCollection.getAll().then(console.log)
     }
-  }
-  control().then()
   
+
 }
 
 main();

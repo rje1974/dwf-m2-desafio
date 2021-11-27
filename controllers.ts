@@ -25,20 +25,20 @@ class PelisController {
   
   constructor() {
     this.pelisCollection = new PelisCollection
-  }
+  };
   
-  async get(options:any):Promise<any>{
-    if (typeof options.id === 'number' ) {
-      const resultado = await this.pelisCollection.getById(options.id)
-      console.log(resultado)
-      return resultado
+  get(options:any){
+    if (options.actions == "get") {
+      return this.pelisCollection.getById(options.params.id).then((data) => {return data})
+    } if (options.actions == "search") {
+      return this.pelisCollection.search(options.params).then((data)=>{return data})
     } else {
-      return await this.pelisCollection.search(options)
-    } 
-  }
-  
-  async add(peli:Peli){
-    return await this.pelisCollection.add(peli)
+      this.pelisCollection.getAll().then(console.log)
+      }
+    }
+    
+  add(peli:Peli): Promise<any>{
+    return this.pelisCollection.add(peli)
   }
 
 }
@@ -46,8 +46,33 @@ class PelisController {
 export { PelisController};
 
 
-// function main (){
-//   console.log("hola")
+
+// function main () {
+
+//     const hola = new PelisCollection
+//     const obj1 = {'title': "n"};
+//     const obj2 = {title: "una"};
+//     const obj3 = {tags: "nanan"};
+//     const obj4 = {tags: "tt"};
+//     const obj5 = [obj1,obj3,obj4]
+//     const obj6 = { title: 'ti', tag: 'uu' }
+//     const obj7 = {id:1}
+//     const obj8 = { id: 123, title: "carli jonessssssssssssssssssssssssss", tags: []}
+
+//     hola.getAll().then(console.log)
+
+//     hola.getById(210439).then(console.log)
+
+//     hola.search(obj2).then(console.log)
+
+//     hola.search(obj4).then(console.log)
+
+//     hola.search(obj6).then(console.log)
+
+//     hola.add(obj8).then(console.log)
+
+
 // }
 
 // main()
+
