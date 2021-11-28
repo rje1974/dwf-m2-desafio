@@ -15,17 +15,18 @@ class Peli {
 class PelisCollection {
 
     
-    getAll():Promise<Peli[]>{
-        return jsonfile.readFile("./pelis.json").then(busqueda => busqueda)
+    getAll():Promise<any>{
+        return jsonfile.readFile("./pelis.json").then((busqueda) => {return busqueda})
     };
 
-    getById(id:number) {
+    
+
+    getById(id:number):Promise<Peli>{
         return this.getAll().then(pelis => {
-            const busqueda = pelis.find(((peli: { id: number; }) => peli.id == id))
+            const busqueda = _.find(pelis,{ 'id': id })
             return busqueda
         }
         )
-//        console.log("soybusqueda",busqueda)
     }
 
     search (opcion:any):Promise<any>{
@@ -59,7 +60,7 @@ class PelisCollection {
         return this.getAll().then(pelis => {
             return this.getById(peli.id).then(buscado => {
                 if (buscado == undefined) {
-                    pelis.push(peli)
+                    pelis.push(peli);
                     jsonfile.writeFile("./pelis.json",pelis);
                     return true
                 } else {
@@ -81,12 +82,13 @@ export { PelisCollection, Peli};
 //     const obj4 = {tags: "tt"};
 //     const obj5 = [obj1,obj3,obj4]
 //     const obj6 = { title: 'ti', tag: 'uu' }
-//     const obj7 = {id:1}
+//     const obj7 = {id:4321865}
 //     const obj8 = { id: 123, title: "carli jonessssssssssssssssssssssssss", tags: []}
+
 
 //     hola.getAll().then(console.log)
 
-//     hola.getById(210439).then(console.log)
+//    hola.getById(obj7.id).then(console.log)
 
 //     hola.search(obj2).then(console.log)
 

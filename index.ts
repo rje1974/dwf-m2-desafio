@@ -31,13 +31,13 @@ function main() {
   const dato = new PelisController;
 
   if (objetoUsable.actions == "get") {
-      return dato.get(objetoUsable).then(console.log)
+      return dato.get(objetoUsable.params).then(console.log)
     } if (objetoUsable.actions == "search") {
-      return dato.get(objetoUsable).then(console.log)
-    } if (objetoUsable.actions === "add") {
+      return dato.get(objetoUsable.params).then(console.log)
+    } 
+    if (objetoUsable.actions === "add") {
       const agregable:any = objetoUsable.params
-      const resultado = dato.add(agregable)
-      return resultado
+      return dato.add(agregable).then(console.log)
     } else {
       return dato.pelisCollection.getAll().then(console.log)
     }
