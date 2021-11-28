@@ -15,7 +15,7 @@ class Peli {
 class PelisCollection {
 
     
-    getAll():Promise<any>{
+    getAll(){
         return jsonfile.readFile("./pelis.json").then((busqueda) => {return busqueda})
     };
 
@@ -23,11 +23,12 @@ class PelisCollection {
 
     getById(id:number):Promise<Peli>{
         return this.getAll().then(pelis => {
-            const busqueda = _.find(pelis,{ 'id': id })
-            return busqueda
+            const busqueda = _.find(pelis,{ 'id': id });
+            return busqueda;
         }
         )
     }
+
 
     search (opcion:any):Promise<any>{
         return this.getAll().then(pelis => {            
@@ -60,7 +61,7 @@ class PelisCollection {
         return this.getAll().then(pelis => {
             return this.getById(peli.id).then(buscado => {
                 if (buscado == undefined) {
-                    pelis.push(peli);
+                    pelis.push(peli)
                     jsonfile.writeFile("./pelis.json",pelis);
                     return true
                 } else {

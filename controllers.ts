@@ -28,12 +28,7 @@ class PelisController {
   };
   
   get(options:any):Promise<any>{
-    // console.log("quieroverlasopciones",options);
-    // console.log("quieroverlasopciones",Object.keys(options)[0]);
-    // console.log("quieroverlasopcioneskeys",Object.values(options)[0]);
-    // const dato:any = Object.values(options)[0]
-    // console.log('estoesdato',dato)
-    // console.log('estoesdatoooooo',Object.keys( dato)[0])
+
     const valor:any = Object.values(options)[0]
     if (Object.keys(options)[0] === "id") {
       // console.log("estoy en id",valor)
